@@ -294,6 +294,36 @@ var TextView = widget.DOMWidgetView.extend({
     },
 });
 
+var PasswordModel = TextModel.extend({
+  defaults: _.extend({}, TextModel.prototype.defaults, {
+    _view_name: "PasswordView",
+    _model_name: "PasswordModel"
+  }),
+});
+
+var PasswordView = TextView.extend({
+  render: function() {
+    /**
+     * Called when view is rendered.
+     */
+    this.$el
+        .addClass('jupyter-widgets widget-hbox widget-text');
+    this.$label = $('<div />')
+        .addClass('widget-label')
+        .appendTo(this.$el)
+        .hide();
+    this.$textbox = $('<input type="password" />')
+        .addClass('form-control')
+        .appendTo(this.$el);
+    this.update(); // Set defaults.
+    this.listenTo(this.model, 'change:placeholder', function(model, value, options) {
+      this.update_placeholder(value);
+    }, this);
+
+    this.update_placeholder();
+  },
+});
+
 module.exports = {
     StringModel: StringModel,
     HTMLView: HTMLView,
@@ -304,4 +334,6 @@ module.exports = {
     TextareaModel: TextareaModel,
     TextView: TextView,
     TextModel: TextModel,
+    PasswordView: PasswordView,
+    PasswordModel: PasswordModel,
 };

@@ -101,3 +101,10 @@ class Text(_String):
             Whether to unregister the callback
         """
         self._submission_callbacks.register_callback(callback, remove=remove)
+
+
+@register('Jupyter.Password')
+class Password(Text):
+    """Single line password textbox widget."""
+    _view_name = Unicode('PasswordView').tag(sync=True)
+    _model_name = Unicode('PasswordModel').tag(sync=True)
